@@ -1,0 +1,109 @@
+•https://ionicframework.com/
+•Entrar na pasta ionic pelo cmd
+•Comando para garantir a versão mais recente do ionic
+C:\ionic> npm i -g @ionic/cli
+
+C:\ionic> ionic start camApp040A blank --type=angular
+NgModules 'Enter'
+Create free Ionic account? N
+
+•https://ionicframework.com/docs/react/your-first-app
+•Docs- Guide - Angular- Build Your First App
+•Entrar na pasta do aplicativo e executar o comando
+C:\ionic\camApp040A> npm install @capacitor/camera @capacitor/preferences @capacitor/filesystem
+C:\ionic\camApp040A> npm install @ionic/pwa-elements
+
+===============================================
+Next, import @ionic/pwa-elements by editing src/main.tsx.
+
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
+
+// Call the element loader after the platform has been bootstrapped
+defineCustomElements(window);
+
+============================================
+•https://ionicframework.com/docs/angular/pwa
+•Angular - Progressive  Web Apps
+C:\ionic\campApp040A> ng add @angular/pwa
+yes
+
+•tem que buildar, cria uma pasta www
+C:\ionic\campApp040A> ionic build --prod
+
+
+https://ionicframework.com/docs/react/your-first-app/taking-photos
+taking photos
+C:\ionic\campApp040A> ionic g service services/foto
+
+•home.page.html
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      IA
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="success" (click)="tirarFoto()">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+
+
+foto.service.ts
+import { Injectable } from '@angular/core';
+
+import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import { Filesystem, Directory } from '@capacitor/filesystem';
+import { Preferences } from '@capacitor/preferences';
+import { Foto } from '../models/Foto.interface';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class FotoService {
+
+  //Cria a lista de fotos que vão estar armazenadas no dispositivo
+  fotos: Foto[] = []
+  //Cria a variável que armazena o local físico (pasta) de armazenamento das fotos
+  private FOTO_ARMAZENAMENTO: string = 'fotos';
+
+  constructor() { }
+
+  //Função para tirar / buscar novas fotos
+  async tirarFoto() {
+    //Chamar a função de câmera e armazena o arquivo na constante
+    const fotoCapturada = await Camera.getPhoto({
+      resultType: CameraResultType.Uri, // Dados baseados em arquivos / oferece melhor desempenho
+      source: CameraSource.Camera, // Tira automaticamente uma nova foto com a camera
+      quality: 100 // Qualidade da imagem tirada, vai de 0 a 100
+    });
+  }
+}
+
+
+home.page.ts
+import { Component } from '@angular/core';
+import { FotoService } from '../services/foto.service';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss'],
+})
+export class HomePage {
+
+  constructor(public fotoService: FotoService) {}
+
+  tirarFoto(){
+    this.fotoService.tirarFoto();
+  }
+
+}
+
+
+
