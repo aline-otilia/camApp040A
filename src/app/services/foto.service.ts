@@ -16,7 +16,7 @@ import { Capacitor } from '@capacitor/core';
   providedIn: 'root',
 })
 export class FotoService {
-  fotos: Foto[] = [];
+  fotos: Foto[] = []; // Onde as fotos vão ficar armazenadas
   private FOTO_ARMAZENAMENTO: string = 'fotos';
 
   constructor(private platform: Platform) { }
@@ -47,7 +47,7 @@ export class FotoService {
     const fotoCapturada = await Camera.getPhoto({
       resultType: CameraResultType.Uri, // dados baseados em arquivos; oferece o melhor desempenho
       source: CameraSource.Camera, // tirar automaticamente uma nova foto com a câmera
-      quality: 100,
+      quality: 50, // Trocar para 50 para não precisar fazer compactação da imagem
     });
 
     const salvarArquivoFoto = await this.salvarFoto(fotoCapturada);
