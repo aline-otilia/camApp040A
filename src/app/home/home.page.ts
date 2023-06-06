@@ -14,7 +14,8 @@ export class HomePage {
   async ngOnInit() {
     await this.fotoService.carregarFotosSalvas();
   }
-  // tirarFoto() { this.fotoService.tirarFoto(); }
+  tirarFoto() { this.fotoService.tirarFoto(); }
+
   public async showActionSheet(foto: Foto, position: number) {
     const actionSheet = await this.actionSheetController.create({
       header: 'Fotos',
