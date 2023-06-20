@@ -117,3 +117,4 @@ depois add no pakkage.json
 ionic g page modal
 ionic g page faceModal
 
+* Exibir implementação nas tags
